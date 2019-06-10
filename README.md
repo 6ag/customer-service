@@ -21,7 +21,7 @@
 
 
 
-## 部署
+## 项目部署
 
 ### 后端
 
@@ -29,7 +29,7 @@
 
 1. 创建数据库并导入 `kefu.sql` 
 
-2. 修改 `kefu-admin` Module 下的 `application-dev.yml` 配置文件中的数据库配置
+2. 修改 `kefu-admin` **Module** 下 `application-dev.yml` 配置文件中的数据库配置
 
    
 
