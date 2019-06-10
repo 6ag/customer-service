@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kefu.admin.mapper.TeamMapper">
+  <resultMap id="BaseResultMap" type="com.kefu.admin.entity.Team">
+    <!--@mbg.generated generated on Wed May 22 22:00:20 CST 2019.-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="industry" jdbcType="VARCHAR" property="industry" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    <!--@sql select -->
+    id, `name`, industry, province, city, created_at, updated_at
+    <!--@sql from tb_team-->
+  </sql>
+
+  <select id="selectById" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_team
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectPageList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_team
+    <where>
+      <if test="name != null and name != ''">
+        name like concat('%', #{name,jdbcType=VARCHAR}, '%')
+      </if>
+    </where>
+  </select>
+
+</mapper>

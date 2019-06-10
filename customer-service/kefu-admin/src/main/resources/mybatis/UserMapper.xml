@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kefu.admin.mapper.UserMapper">
+  <resultMap id="UserResultMap" type="com.kefu.admin.entity.User">
+    <!--@mbg.generated generated on Wed May 22 21:39:06 CST 2019.-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="gender" jdbcType="INTEGER" property="gender" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="team_id" jdbcType="INTEGER" property="teamId" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+
+  <!-- 扩展团队属性 -->
+  <resultMap id="ExtUserTeamResultMap" type="com.kefu.admin.entity.User" extends="UserResultMap">
+    <association property="team" column="team_id" select="com.kefu.admin.mapper.TeamMapper.selectById" />
+  </resultMap>
+
+  <!-- 扩展角色集合属性 -->
+  <resultMap id="ExtUserRoleResultMap" type="com.kefu.admin.entity.User" extends="ExtUserTeamResultMap">
+    <collection property="roles" column="id" select="com.kefu.admin.mapper.RoleMapper.selectListByUserId" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    <!--@sql select -->
+    id, nickname, avatar, email, birthday, gender, `status`, username, `password`, open_id,
+    team_id, created_at, updated_at
+    <!--@sql from tb_user-->
+  </sql>
+
+  <select id="selectPageList" resultMap="ExtUserRoleResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_user
+    <where>
+      <if test="username != null and username != ''">
+        username=#{username,jdbcType=VARCHAR}
+      </if>
+      <if test="email != null and email != ''">
+        and email=#{email,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null">
+        and status=#{status,jdbcType=INTEGER}
+      </if>
+      <if test="teamId != null">
+        and team_id=#{teamId,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectById" resultMap="ExtUserRoleResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_user
+    where id=#{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByUsername" resultMap="ExtUserRoleResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_user
+    where username=#{username,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByOpenId" resultMap="ExtUserRoleResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_user
+    where open_id=#{openId,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteUserRoleByUserId">
+    delete
+    from tb_user_role
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertUserRole">
+    insert into tb_user_role (user_id, role_id, created_at, updated_at)
+    values (#{userId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, now(), now())
+  </insert>
+
+  <delete id="deleteUserRoleByRoleId">
+    delete
+    from tb_user_role
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </delete>
+</mapper>

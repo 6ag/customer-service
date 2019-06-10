@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kefu.admin.mapper.ConversationMapper">
+  <resultMap id="BaseResultMap" type="com.kefu.admin.entity.Conversation">
+    <!--@mbg.generated-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="from_user_id" jdbcType="INTEGER" property="fromUserId" />
+    <result column="to_user_id" jdbcType="INTEGER" property="toUserId" />
+    <result column="unread_count" jdbcType="INTEGER" property="unreadCount" />
+    <result column="last_message_id" jdbcType="INTEGER" property="lastMessageId" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+
+  <resultMap id="ExtMessageResultMap" type="com.kefu.admin.entity.Conversation" extends="BaseResultMap">
+    <association property="lastMessage" column="last_message_id" select="com.kefu.admin.mapper.MessageMapper.selectById" />
+  </resultMap>
+
+  <resultMap id="ExtToUserResultMap" type="com.kefu.admin.entity.Conversation" extends="ExtMessageResultMap">
+    <association property="toUser" column="to_user_id" select="com.kefu.admin.mapper.UserMapper.selectById" />
+  </resultMap>
+
+  <resultMap id="ExtFromUserResultMap" type="com.kefu.admin.entity.Conversation" extends="ExtToUserResultMap">
+    <association property="fromUser" column="from_user_id" select="com.kefu.admin.mapper.UserMapper.selectById" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    <!--@sql select -->
+    id, from_user_id, to_user_id, unread_count, last_message_id, created_at, updated_at
+    <!--@sql from tb_conversation-->
+  </sql>
+
+  <select id="selectListByUserId" resultMap="ExtFromUserResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_conversation
+    where from_user_id=#{userId,jdbcType=INTEGER} or to_user_id=#{userId,jdbcType=INTEGER}
+  </select>
+
+</mapper>

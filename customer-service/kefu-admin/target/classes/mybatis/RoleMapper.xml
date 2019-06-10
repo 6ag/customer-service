@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kefu.admin.mapper.RoleMapper">
+  <resultMap id="BaseResultMap" type="com.kefu.admin.entity.Role">
+    <!--@mbg.generated generated on Wed May 22 21:40:25 CST 2019.-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name_en" jdbcType="VARCHAR" property="nameEn" />
+    <result column="name_zh" jdbcType="VARCHAR" property="nameZh" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    <!--@sql select -->
+    id, name_en, name_zh, level, remark, created_at, updated_at
+    <!--@sql from tb_role-->
+  </sql>
+
+  <delete id="deleteRolePermissionByRoleId">
+    delete
+    from tb_role_permission
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertRolePermission">
+    insert into tb_role_permission (role_id, permission_id, created_at, updated_at)
+    values (#{roleId,jdbcType=INTEGER}, #{permissionId,jdbcType=INTEGER}, now(), now())
+  </insert>
+
+  <select id="selectListByUserId" resultMap="BaseResultMap">
+    select r.id,
+           r.name_en,
+           r.name_zh,
+           r.level,
+           r.remark,
+           r.created_at,
+           r.updated_at
+    from tb_role r,
+         tb_user_role ur
+    where r.id = ur.role_id
+      and ur.user_id = #{userId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectPageList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_role
+    <where>
+      <if test="name != null and name != ''">
+        name_zh = #{name,jdbcType=VARCHAR}
+        or name_en = #{name,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectUserCountByRoleId" resultType="int">
+    select count(*)
+    from tb_user_role
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </select>
+
+  <select id="getRoleIds" resultType="java.lang.Integer">
+    select id
+    from tb_role
+    where name_en in
+    <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
+
+</mapper>

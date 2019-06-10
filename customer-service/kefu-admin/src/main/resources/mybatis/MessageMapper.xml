@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kefu.admin.mapper.MessageMapper">
+  <resultMap id="BaseResultMap" type="com.kefu.admin.entity.Message">
+    <!--@mbg.generated-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="from_user_id" jdbcType="INTEGER" property="fromUserId" />
+    <result column="to_user_id" jdbcType="INTEGER" property="toUserId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    <!--@sql select -->
+    id, content, from_user_id, to_user_id, `type`, `status`, created_at, updated_at
+    <!--@sql from tb_message-->
+  </sql>
+
+  <select id="selectById" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_message
+    where id=#{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectMessageList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_message
+    <where>
+      <if test="lessMessageId != null and lessMessageId != 0">
+        id <![CDATA[ < ]]> #{lessMessageId,jdbcType=INTEGER}
+      </if>
+      and
+      ((from_user_id=#{userId,jdbcType=INTEGER} and to_user_id=#{contactUserId,jdbcType=INTEGER})
+      or
+      (to_user_id=#{userId,jdbcType=INTEGER} and from_user_id=#{contactUserId,jdbcType=INTEGER}))
+      order by id desc
+      limit 20
+    </where>
+  </select>
+
+</mapper>
