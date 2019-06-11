@@ -1,6 +1,7 @@
 package com.kefu.admin.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kefu.admin.dto.RoleDto;
@@ -87,11 +88,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
      */
     @Override
     public Role findUserNormalRole() {
-        List<Role> roleEntities = list();
-        if (roleEntities != null && roleEntities.size() > 0) {
-            return roleEntities.get(roleEntities.size() - 1);
-        }
-        return null;
+        return getOne(new QueryWrapper<Role>().lambda().eq(Role::getNameEn, "ROLE_TEAM_ADMIN"));
     }
 
     /**
