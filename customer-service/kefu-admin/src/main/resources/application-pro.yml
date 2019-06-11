@@ -1,4 +1,14 @@
+server:
+  # 端口号
+  port: 8080
+  tomcat:
+    uri-encoding: utf-8
 spring:
+  # redis配置
+  redis:
+    host: localhost
+    port: 6379
+    password:
   # 数据库配置
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
@@ -47,3 +57,12 @@ spring:
         login-username: admin
         # 登录密码
         login-password: 123456
+
+netty:
+  tcp:
+    port: 8888
+  websocket:
+    path: /chat
+    port: 9999
+    http-object-arggregator:
+      max-content-length: 64 * 1024

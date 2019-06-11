@@ -22,8 +22,8 @@ import com.kefu.admin.vo.ButtonVo;
 import com.kefu.admin.vo.MenuVo;
 import com.kefu.admin.vo.UserVo;
 import com.kefu.common.db.util.PageUtils;
-import com.kefu.common.exception.UserExistsException;
-import com.kefu.common.exception.UserNotExistsException;
+import com.kefu.common.exception.user.UserExistsException;
+import com.kefu.common.exception.user.UserNotExistsException;
 import com.kefu.common.util.tree.TreeUtils;
 import com.kefu.common.vo.PageVo;
 

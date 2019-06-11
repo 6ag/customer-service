@@ -2,7 +2,7 @@ package com.kefu.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.kefu.admin.dto.UserDto;
-import com.kefu.common.exception.UserExistsException;
+import com.kefu.common.exception.user.UserExistsException;
 import com.kefu.admin.entity.User;
 import com.kefu.common.vo.PageVo;
 import com.kefu.admin.dto.UserPageDto;

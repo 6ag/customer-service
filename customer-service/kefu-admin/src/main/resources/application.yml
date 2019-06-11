@@ -1,10 +1,8 @@
-server:
-  port: 8080
-
 spring:
   profiles:
     active: dev
 
+# MyBatis配置
 mybatis-plus:
   mapper-locations: classpath*:mybatis/**/*.xml
   type-aliases-package: com.kefu.admin.entity
@@ -16,12 +14,3 @@ jwt:
   secret: w-eyJleHAiOjE1NDMyMDUyODUsInN1YiI6ImFkbWluIiwiY3JlYXRlZCI6MTU0MDYxMzI4N
   expiration: 3600000
   tokenHead: "Bearer "
-
-netty:
-  tcp:
-    port: 8888
-  websocket:
-    path: /chat
-    port: 9999
-    http-object-arggregator:
-      max-content-length: 64 * 1024

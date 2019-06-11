@@ -34,7 +34,7 @@ public class SwaggerConfiguration {
                         .version("1.0")
                         .build());
         ApiSelectorBuilder builder = docket.select();
-        builder.apis(RequestHandlerSelectors.basePackage("com.kefu.admin.controller"));
+        builder.apis(RequestHandlerSelectors.basePackage("com.kefu.admin.handler"));
         return docket;
     }
 

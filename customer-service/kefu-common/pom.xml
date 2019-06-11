@@ -14,6 +14,13 @@
 
   <dependencies>
 
+    <!--SpringBoot Aop-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-aop</artifactId>
+      <version>${boot.version}</version>
+    </dependency>
+
     <!-- Netty -->
     <dependency>
       <groupId>io.netty</groupId>
@@ -80,6 +87,12 @@
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
+    </dependency>
+
+    <!--SpringBoot Redis-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-redis</artifactId>
     </dependency>
 
     <dependency>

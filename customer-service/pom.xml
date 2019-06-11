@@ -69,6 +69,13 @@
         <version>${jjwt.version}</version>
       </dependency>
 
+      <!--SpringBoot Redis-->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-redis</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+
       <!-- MyBatis Plus -->
       <dependency>
         <groupId>com.baomidou</groupId>

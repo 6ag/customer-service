@@ -1,5 +1,8 @@
 package com.kefu.common.vo;
 
+import com.kefu.common.constant.CommonConstants;
+import com.kefu.common.exception.common.ApiException;
+
 import java.io.Serializable;
 
 import lombok.Data;
@@ -147,7 +150,7 @@ public class ResultVo<T> implements Serializable {
     public static ResultVo error408(String msg, String error) {
         return create(408, msg, null, error);
     }
-    
+
     /**
      * 415 - 对于当前请求的方法和所请求的资源，请求所支持的格式错误
      *
@@ -181,4 +184,11 @@ public class ResultVo<T> implements Serializable {
         return create(502, msg, null, error);
     }
 
+    public static ResultVo error(Exception exception) {
+        if (exception instanceof ApiException) {
+            return error(((ApiException) exception).getCode(), null, exception.getMessage());
+        } else {
+            return error(CommonConstants.ERROR_CODE, null, exception.getMessage());
+        }
+    }
 }
