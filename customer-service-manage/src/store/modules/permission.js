@@ -21,7 +21,8 @@ export function recursionRouter(menus) {
       router.meta.resources = menu.resources
     } else {
       router.path = menu.path
-      router.component = () => import(`@/views/${menu.component}`)
+      // () => import(`@/views/${menu.component}`)
+      router.component = (resolve) => require([`@/views/${menu.component}`], resolve)
       router.meta.title = menu.name
       router.meta.icon = menu.icon
       router.meta.resources = menu.resources
