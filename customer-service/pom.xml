@@ -26,7 +26,7 @@
     <swagger.version>2.7.0</swagger.version>
     <kaptcha.version>2.3.2</kaptcha.version>
     <boot.version>2.1.1.RELEASE</boot.version>
-    <mysql.connector.version>8.0.15</mysql.connector.version>
+    <mysql.connector.version>8.0.28</mysql.connector.version>
     <lombok.version>1.18.6</lombok.version>
     <fastjson.version>1.2.54</fastjson.version>
     <hutool.version>4.5.10</hutool.version>
